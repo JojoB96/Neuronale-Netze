@@ -28,14 +28,15 @@ Input: Spielfeld
 Output: Feld mit größter activation oder Randomfeld
 
 #def create_training_data
-Input:
-Output:
+Input: Spielfeldliste
+Output: Vektor aus Spielfeldliste und Q-Values
 
 # def train_net(self, iterations):
 Input: maximale Anzahl an Iterationen
-
-
-"Output":trainiertes Netz
+erstelle Spielfeldliste indem ein Spiel durchgeführt wird
+create_training_data
+train (Backpropagation, update_weights)
+"Output":speichere trainiertes Netz (jede x-te Iteration)
 
 
 
@@ -48,9 +49,3 @@ Input: Feld
 mache von Feld aus nach Regeln einen Zug
 bestimme Reward
 Output: Spielfeld
-
-#zu train_net:
-was meinst du mit geeigneten Spielfunktionen?
-
-die Gewichte würde ich auf jedenfall zwischenspeichern, aber nicht jedes mal
-
