@@ -50,7 +50,7 @@ class Network(object):
         for it in range(self.layers):
             forward = np.dot(self.weights[it], activation) + self.biases[it]
             activation = sigmoid(forward)
-        
+            
         return activation
     
     def feed_next(self, activation, layer):

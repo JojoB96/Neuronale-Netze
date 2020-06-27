@@ -9,6 +9,7 @@ import numpy as np
 import random
 import Network
 from copy import deepcopy
+import itertools
 
 class Mancala(object):
     def __init__(self, exploration_rate = None, network_layers = None , name = None):
@@ -118,7 +119,6 @@ class Mancala(object):
         for i in spielfeld_liste:
             q = self.guess_Q(i)
             q_liste.append(q)
-            
         return [(s,q) for s,q in zip(spielfeld_liste, q_liste)]
     
     def train_net(self, iterations):
