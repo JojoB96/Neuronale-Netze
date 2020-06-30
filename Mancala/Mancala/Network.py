@@ -88,4 +88,8 @@ class Network(object):
         for i in range(self.layers):
             self.biases[i] -= eta/len(mini_batch)*grad_b[i]
             self.weights[i] -= eta/len(mini_batch)*grad_w[i]
-
+    
+    def stochastic_update(self, full_batch, mini_batch_length, eta):
+        mini_batch_sample = random.sample(range(len(full_batch)),mini_batch_length)
+        mini_batch        = [full_batch[i] for i in mini_batch_sample]
+        self.update_weights_and_bias(mini_batch, eta)

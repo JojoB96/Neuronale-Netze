@@ -24,7 +24,9 @@ class Mancala(object):
         #else:
             self.spielfeld          = np.array([6,6,6,6,6,6,6,6,6,6,6,6,0,0])  #Spielfeld (zustand)
             self.exploration_rate   = exploration_rate
-            self.rewards            = [1.0]
+            self.rewards            = [1.0] 
+            # rewards[0]:   Das Netzwerk bekommt einen Punkt für jede Kugel die es faengt
+            # rewards[.]:   *Moegliche weitere Belohnungen / Strafen*
     
             self.net                = Network.Network(network_layers, name)
         
@@ -87,9 +89,8 @@ class Mancala(object):
             return np.argmax(self.guess_Q(spielfeld[0:6]))
         else:
             return np.argmax(self.guess_Q(spielfeld[7:12]))+7
-
+        
     
-    # def random_action(self, spielfeld)            ???
     
     def get_next_action(self, spielfeld):
         if random.random() > self.exploration_rate:
@@ -108,11 +109,12 @@ class Mancala(object):
         
     def play(self):
         Spielfeldliste = [deepcopy(self.spielfeld)]
-        while not(np.array_equal(self.spielfeld[0:6] ,[0,0,0,0,0,0]) or np.array_equal(self.spielfeld[7:12] ,[0,0,0,0,0,0])):
+        while not(np.array_equal(self.spielfeld[0:6] ,[0,0,0,0,0,0]) or np.array_equal(self.spielfeld[7:12] ,[0,0,0,0,0,0])): # muesste es nicht ausreichen zu ueberpruefen, pb die schatzmulden mehr als die haelfte der Kugeln beinhalten? ( also self.spielfeld[12] > 36 or also self.spielfeld[13] > 36
             feld = self.get_next_action(self.spielfeld)
             self.spielfeld = self.take_action(feld)
             Spielfeldliste.append(deepcopy(self.spielfeld))
         return Spielfeldliste
+    
     
     def create_training_data(self, spielfeld_liste):
         q_liste = []
@@ -121,14 +123,20 @@ class Mancala(object):
             q_liste.append(q)
         return [(s,q) for s,q in zip(spielfeld_liste, q_liste)]
     
-    def train_net(self, iterations):
+    
+    def train_net(self, iterations, mini_batch_length):
         for i in range(iterations):
-            spielfeld_liste = self.play() #          Hier benötigen wir dann noch geeignete Spielfunktionen
+            spielfeld_liste = self.play()
             training_data = self.create_training_data(spielfeld_liste)
-            #self.net.                              Bisher hab ich noch keine Methode für die stochastische Gradientenmethode, kommt noch
+            if mini_batch_length > len(spielfeld_liste):
+                self.net.update_stochastic(spielfeld_liste, len(spielfeld_liste), eta)
+            else:
+                self.net.update_stochastic(spielfeld_liste, mini_batch_length, eta)
+            
         print(training_data)   
         # evtl. speichern wir jedes mal / ab und zu die Gewichte und Bias (net.save_network.to_files(name))
-              
+    
+    
 ma = Mancala(exploration_rate = 0.4)
 
        
