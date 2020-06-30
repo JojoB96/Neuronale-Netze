@@ -1,8 +1,11 @@
 # standard library
 import random
 
-# Basic math tools (Third-party library)
+# asic math tools (Third-party library)
 import numpy as np
+
+# basic tools for working with files and directories
+import os
 
 def sigmoid(z):
     x = np.exp( z ) 
@@ -34,17 +37,30 @@ class Network(object):
         self.biases = []
         self.weights = []
         
+        path = os.getcwd()
+        os.chdir(path + '/' + name)
+        
         for i in range(0,self.layers):
             i += 1
-            self.biases.append(np.loadtxt(name+"."+"bias."+str(i)+".csv", delimiter=",", ndmin=1))
-            self.weights.append(np.loadtxt(name+"."+"weights."+str(i)+".csv", delimiter=",", ndmin=2))
-            
+            self.biases.append(np.loadtxt("bias."+str(i)+".csv", delimiter=",", ndmin=1))
+            self.weights.append(np.loadtxt("weights."+str(i)+".csv", delimiter=",", ndmin=2))
+        
+        os.chdir(path)
+        
     def save_network_to_files(self, name):
+        path = os.getcwd()
+        
+        if not os.path.isdir('./'+name):
+            os.mkdir(path + '/' + name)
+        
+        os.chdir(path + '/' + name)
+        
         for i in range(0,self.layers):
             i += 1
-            np.savetxt(name+"."+"bias."+str(i)+".csv", self.biases[i-1], delimiter=",")
-            np.savetxt(name+"."+"weights."+str(i)+".csv", self.weights[i-1], delimiter=",")
-                
+            np.savetxt("bias."+str(i)+".csv", self.biases[i-1], delimiter=",")
+            np.savetxt("weights."+str(i)+".csv", self.weights[i-1], delimiter=",")
+        
+        os.chdir(path)
     
     def feedforward(self, activation):
         for it in range(self.layers):
