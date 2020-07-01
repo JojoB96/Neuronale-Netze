@@ -12,7 +12,7 @@ from copy import deepcopy
 import itertools
 
 class Mancala(object):
-    def __init__(self, exploration_rate = None, network_layers = None , name = None):
+    def __init__(self, exploration_rate = None, network_layers = 4 , name = 'default_neurons'):
     # the Parameters are optional and are used to initialize a suitable neuronal network for the Game:
     #   exploration_rate:   scalar, determines with wich rate an random action should be done
     #   network_layers  :   scalar, contains the number of layers for the neuronal network
@@ -86,9 +86,9 @@ class Mancala(object):
     def greedy_action(self, spielfeld):
         #choose the action that will end to the highest q-value (according to the neural network)
         if self.spieler1 == True:
-            return np.argmax(self.guess_Q(spielfeld[0:6]))
+            return np.argmax(self.guess_Q(spielfeld))
         else:
-            return np.argmax(self.guess_Q(spielfeld[7:12]))+7
+            return np.argmax(self.guess_Q(spielfeld))+7
         
     
     
