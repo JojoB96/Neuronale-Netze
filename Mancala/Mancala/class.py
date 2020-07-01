@@ -124,20 +124,21 @@ class Mancala(object):
         return [(s,q) for s,q in zip(spielfeld_liste, q_liste)]
     
     
-    def train_net(self, iterations, mini_batch_length):
+    def train_net(self, iterations, mini_batch_length, eta):
         for i in range(iterations):
             spielfeld_liste = self.play()
             training_data = self.create_training_data(spielfeld_liste)
             if mini_batch_length > len(spielfeld_liste):
-                self.net.update_stochastic(spielfeld_liste, len(spielfeld_liste), eta)
+                self.net.stochastic_update(spielfeld_liste, len(spielfeld_liste), eta)
             else:
-                self.net.update_stochastic(spielfeld_liste, mini_batch_length, eta)
+                self.net.stochastic_update(spielfeld_liste, mini_batch_length, eta)
             
         print(training_data)   
         # evtl. speichern wir jedes mal / ab und zu die Gewichte und Bias (net.save_network.to_files(name))
     
     
 ma = Mancala(exploration_rate = 0.4)
-
-       
-ma.train_net(5)
+print("Start")
+print(ma.net.biases)       
+ma.train_net(5,20,1)
+print(ma.net.biases)
