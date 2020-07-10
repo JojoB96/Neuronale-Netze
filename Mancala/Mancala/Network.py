@@ -96,9 +96,8 @@ class Network(object):
         grad_b = np.array([np.zeros(b.shape) for b in self.biases])
         grad_w = np.array([np.zeros(w.shape) for w in self.weights])
         
-        print(mini_batch)
-        for [approx, exact] in mini_batch:
-            delta_b, delta_w = self.backpropagation(approx, exact)
+        for m in mini_batch:
+            delta_b, delta_w = self.backpropagation(m[0], m[1])
             grad_b = np.add(grad_b,delta_b)
             grad_w = np.add(grad_w,delta_w)
 
