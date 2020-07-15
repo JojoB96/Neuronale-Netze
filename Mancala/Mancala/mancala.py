@@ -56,7 +56,8 @@ class Mancala(object):
         #return mulden_erlaubt, muldenliste
     
     def randomfeld(self):               # evtl anpassen, sodass kein Feld ausgewaehlt wird, welches keine Bohnen hat
-        return random.randint(0,5)
+        muldenliste = self.check_action()
+        return random.choice(muldenliste)
     
         
     def guess_Q(self, spielfeld):       # Uebergebe nur spielfeld bis feld 11?
@@ -70,13 +71,20 @@ class Mancala(object):
     
     def greedy_action(self, spielfeld):    # erwartet, dass das neuronale netz ein argument der groesse 6 ausgibt
         #choose the action that will end to the highest q-value (according to the neural network)
-        return np.argmax(self.guess_Q(spielfeld))
+        gQ = self.guess_Q(spielfeld)
+        while spielfeld[np.argmax(gQ)] == 0:
+            gQ[np.argmax(gQ)] = 0
+            #print(np.argmax(self.guess_Q(spielfeld)))
+            if np.argmax(gQ) == 0:
+                break
+        return np.argmax(gQ)
         
         
     def get_next_action(self, spielfeld):
         if random.random() > self.exploration_rate:
             return self.greedy_action(spielfeld)
         else:
+            
             return self.randomfeld()
         
         
@@ -133,7 +141,7 @@ class Mancala(object):
     def play(self):                                  # überprüfen
         Spielfeldliste = [deepcopy(self.spielfeld)]
         reward_liste   = [0.0]
-        while not(np.array_equal(self.spielfeld[0:6] ,[0,0,0,0,0,0]) or np.array_equal(self.spielfeld[6:12] ,[0,0,0,0,0,0])): # muesste es nicht ausreichen zu ueberpruefen, ob die schatzmulden mehr als die haelfte der Kugeln beinhalten? ( also self.spielfeld[12] > 36 or also self.spielfeld[13] > 36
+        while not(np.array_equal(self.spielfeld[0:6] ,[0,0,0,0,0,0]) or np.array_equal(self.spielfeld[6:12] ,[0,0,0,0,0,0]) or self.spielfeld[12]>36 or self.spielfeld[13]>36): # muesste es nicht ausreichen zu ueberpruefen, ob die schatzmulden mehr als die haelfte der Kugeln beinhalten? ( also self.spielfeld[12] > 36 or also self.spielfeld[13] > 36
             feld = self.get_next_action(self.spielfeld)
             self.spielfeld, reward = self.get_spielfeld_and_reward_after_action(self.spielfeld, feld)
             Spielfeldliste.append(deepcopy(self.spielfeld))

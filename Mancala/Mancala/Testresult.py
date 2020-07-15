@@ -10,11 +10,11 @@ import numpy as np
 import random
 import mancala as m
 
-ma = m.Mancala(exploration_rate = 0.7)
+ma = m.Mancala(exploration_rate = 0.2)
 print("Start")
 print(ma.net.biases)   
 print(ma.spielfeld[0:12])
-#ma.train_net(100,25,1)
+ma.train_net(500,25,1)
 print("trained")
 #print(ma.play())
 print('play gegen Random')
@@ -25,11 +25,11 @@ matest.net.load_network_from_files("Test")
 Spieler1gewonnen = 0
 Spieler2gewonnen = 0
 unentschieden = 0
-for i in range (1,2):
+for i in range (1,1000):
     #print(i)
     
-    while not(np.array_equal(matest.spielfeld[0:6] ,[0,0,0,0,0,0]) or np.array_equal(matest.spielfeld[6:12] ,[0,0,0,0,0,0])): # muesste es nicht ausreichen zu ueberpruefen, ob die schatzmulden mehr als die haelfte der Kugeln beinhalten? ( also self.spielfeld[12] > 36 or also self.spielfeld[13] > 36
-        print(matest.spielfeld)
+    while not(np.array_equal(matest.spielfeld[0:6] ,[0,0,0,0,0,0]) or np.array_equal(matest.spielfeld[6:12] ,[0,0,0,0,0,0]) or matest.spielfeld[12]>36 or matest.spielfeld[13]>36): # muesste es nicht ausreichen zu ueberpruefen, ob die schatzmulden mehr als die haelfte der Kugeln beinhalten? ( also self.spielfeld[12] > 36 or also self.spielfeld[13] > 36
+        #print(matest.spielfeld)
     # das geht nicht, zum Gewinn zählen noch die Bohnen auf dem Feld
     #while not(matest.spielfeld[12]>36 or matest.spielfeld[13]>36 or (matest.spielfeld[12] == 36 and matest.spielfeld[13] == 36)):
         #Spieler 1 netz
@@ -54,7 +54,7 @@ for i in range (1,2):
     
     if matest.spielfeld[12] > 36:
         Spieler1gewonnen += 1
-        print(matest.spielfeld)
+        #print(matest.spielfeld)
     elif matest.spielfeld[13] > 36:
         Spieler2gewonnen += 1
     elif matest.spielfeld[12] == 36 and matest.spielfeld[13] == 36:
@@ -62,7 +62,7 @@ for i in range (1,2):
        
     
     matest.reset()
-print("Netz", Spieler1gewonnen/100, "%")
-print("Random", Spieler2gewonnen/100, "%")
-print("unentschieden", unentschieden/100, "%")
+print("Netz", Spieler1gewonnen/10, "%")
+print("Random", Spieler2gewonnen/10, "%")
+print("unentschieden", unentschieden/10, "%")
            
