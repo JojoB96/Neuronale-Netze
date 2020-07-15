@@ -9,7 +9,6 @@ import numpy as np
 import random
 import Network
 from copy import deepcopy
-import itertools
 
 class Mancala(object):
     def __init__(self, exploration_rate = 0.3, network_layers = 4 , name = 'default_neurons'):
@@ -44,15 +43,17 @@ class Mancala(object):
         self.spielfeld          = np.array([6,6,6,6,6,6,6,6,6,6,6,6,0,0])
         self.spieler1           = True
     
-    def check_action(action, spielfeld):
-        mulden_erlaubt = np.empty(6,1)
-        for i in len(mulden_erlaubt):
-            if spielfeld[i] > 0:
-                mulden_erlaubt[i] = True
-            else:
-                mulden_erlaubt[i] = False
-                
-        return mulden_erlaubt
+    def check_action(self):
+      #  mulden_erlaubt = np.empty([6,1])
+        muldenliste = []
+        for i in range(1,6):
+            if self.spielfeld[i] > 0:
+                #mulden_erlaubt[i] = True
+                muldenliste.append(i)
+           # else:
+            #    mulden_erlaubt[i] = False
+        return muldenliste        
+        #return mulden_erlaubt, muldenliste
     
     def randomfeld(self):               # evtl anpassen, sodass kein Feld ausgewaehlt wird, welches keine Bohnen hat
         return random.randint(0,5)
@@ -111,8 +112,14 @@ class Mancala(object):
         #Jede gefangene Bohne wird um self.rewards[0] belohnt
         reward = self.rewards[0]*(tmp_spielfeld[12] - reward)
         #...#
+        if(np.array_equal(tmp_spielfeld[0:6] ,[0,0,0,0,0,0]) or np.array_equal(tmp_spielfeld[6:12] ,[0,0,0,0,0,0])): # muesste es nicht ausreichen zu ueberpruefen, ob die schatzmulden mehr als die haelfte der Kugeln beinhalten? ( also self.spielfeld[12] > 36 or also self.spielfeld[13] > 36
+            tmp_spielfeld[12] += sum(tmp_spielfeld[0:6])
+            tmp_spielfeld[13] += sum(tmp_spielfeld[6:12])
+            
+        if tmp_spielfeld[12] >36:
+            reward += 50
         # Hier könnte man evtl. noch überprüfen ob das Spiel gewonnen wurde und zusaetzliche Belohnung ausschuetten
-        #...#
+        #...# unbedingt!!!
         
         if not self.spieler1:
             # Wenn nicht Spieler1 am Zug war, sondern Spieler2, dann drehe das Spielfeld zurück
@@ -126,7 +133,7 @@ class Mancala(object):
     def play(self):                                  # überprüfen
         Spielfeldliste = [deepcopy(self.spielfeld)]
         reward_liste   = [0.0]
-        while not(np.array_equal(self.spielfeld[0:6] ,[0,0,0,0,0,0]) or np.array_equal(self.spielfeld[7:12] ,[0,0,0,0,0,0])): # muesste es nicht ausreichen zu ueberpruefen, ob die schatzmulden mehr als die haelfte der Kugeln beinhalten? ( also self.spielfeld[12] > 36 or also self.spielfeld[13] > 36
+        while not(np.array_equal(self.spielfeld[0:6] ,[0,0,0,0,0,0]) or np.array_equal(self.spielfeld[6:12] ,[0,0,0,0,0,0])): # muesste es nicht ausreichen zu ueberpruefen, ob die schatzmulden mehr als die haelfte der Kugeln beinhalten? ( also self.spielfeld[12] > 36 or also self.spielfeld[13] > 36
             feld = self.get_next_action(self.spielfeld)
             self.spielfeld, reward = self.get_spielfeld_and_reward_after_action(self.spielfeld, feld)
             Spielfeldliste.append(deepcopy(self.spielfeld))
@@ -173,9 +180,4 @@ class Mancala(object):
         self.net.save_network_to_files('Test')
     
     
-ma = Mancala(exploration_rate = 0.4)
-print("Start")
-print(ma.net.biases)   
-print('train')
-ma.train_net(500,25,1)
-print(ma.play())
+
