@@ -46,8 +46,8 @@ class Mancala(object):
     def check_action(self):
       #  mulden_erlaubt = np.empty([6,1])
         muldenliste = []
-        for i in range(1,6):
-            if self.spielfeld[i] > 0:
+        for i in range(0,6):
+            if self.spielfeld[i+6] > 0:
                 #mulden_erlaubt[i] = True
                 muldenliste.append(i)
            # else:
