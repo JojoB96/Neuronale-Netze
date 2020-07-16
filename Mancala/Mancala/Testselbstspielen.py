@@ -18,7 +18,7 @@ print(ma.spielfeld[0:12])
 print("trained")
 #print(ma.play())
 print('play gegen Random')
-matest = m.Mancala(exploration_rate = 0.2)
+matest = m.Mancala(exploration_rate = 0.8)
 matest.net.load_network_from_files("Test")
 
 Spieler1gewonnen = 0
@@ -63,7 +63,7 @@ for i in range (1,2):
        # print(matest.spielfeld[6:12])
     
     matest.reset()
-print("Netz", Spieler1gewonnen/100, "%")
-print("Random", Spieler2gewonnen/100, "%")
+print("Netz", Spieler1gewonnen, "%")
+print("Du", Spieler2gewonnen, "%")
 print("unentschieden", unentschieden/100, "%")
          

@@ -45,9 +45,19 @@ class Mancala(object):
     
     def check_action(self):
       #  mulden_erlaubt = np.empty([6,1])
+      if not self.spieler1:
         muldenliste = []
         for i in range(0,6):
             if self.spielfeld[i+6] > 0:
+                #mulden_erlaubt[i] = True
+                muldenliste.append(i)
+           # else:
+            #    mulden_erlaubt[i] = False
+        return muldenliste  
+      if self.spieler1:
+        muldenliste = []
+        for i in range(0,6):
+            if self.spielfeld[i] > 0:
                 #mulden_erlaubt[i] = True
                 muldenliste.append(i)
            # else:
@@ -57,6 +67,7 @@ class Mancala(object):
     
     def randomfeld(self):               # evtl anpassen, sodass kein Feld ausgewaehlt wird, welches keine Bohnen hat
         muldenliste = self.check_action()
+       
         return random.choice(muldenliste)
     
         
@@ -73,9 +84,11 @@ class Mancala(object):
         #choose the action that will end to the highest q-value (according to the neural network)
         gQ = self.guess_Q(spielfeld)
         while spielfeld[np.argmax(gQ)] == 0:
+            print("Null")
             gQ[np.argmax(gQ)] = 0
             #print(np.argmax(self.guess_Q(spielfeld)))
             if np.argmax(gQ) == 0:
+                print("Error")
                 break
         return np.argmax(gQ)
         

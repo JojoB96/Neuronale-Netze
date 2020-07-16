@@ -10,7 +10,7 @@ import numpy as np
 import random
 import mancala as m
 
-ma = m.Mancala(exploration_rate = 0.2)
+ma = m.Mancala(exploration_rate = 0.1)
 print("Start")
 print(ma.net.biases)   
 print(ma.spielfeld[0:12])
