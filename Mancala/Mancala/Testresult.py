@@ -10,16 +10,18 @@ import numpy as np
 import random
 import mancala as m
 
-ma = m.Mancala(exploration_rate = 0.1)
+ma = m.Mancala()
+ma.net.generate_random_network([14,14,6])
+ma.name = 'test3'
 print("Start")
-print(ma.net.biases)   
-print(ma.spielfeld[0:12])
-ma.train_net(500,25,1)
+#print(ma.net.biases)   
+ma.print_spielfeld()
+ma.train_net(100,50,5.0,10)
+
 print("trained")
 #print(ma.play())
 print('play gegen Random')
-matest = m.Mancala(exploration_rate = 0.0)
-matest.net.load_network_from_files("Test")
+matest = m.Mancala(exploration_rate = 0.0, name = "test3", network_layers = 2)
 
 #lasse Netz als Spieler 1 gegen Random spielen
 Spieler1gewonnen = 0
@@ -35,8 +37,11 @@ for i in range (1,1000):
         #Spieler 1 netz
         feld = matest.get_next_action(matest.spielfeld)
         matest.spielfeld, reward = matest.get_spielfeld_and_reward_after_action(matest.spielfeld, feld)
+        print("Spieler 1")
+        matest.print_spielfeld()
+        print(matest.guess_Q(matest.spielfeld))
         #random spieler 2
-        matest.get_turned_spielfeld(matest.spielfeld)
+        matest.spieler1 = not matest.spieler1
         muldenliste = matest.check_action()
         if not muldenliste:
             matest.spielfeld[12] += sum(matest.spielfeld[0:6])
@@ -46,9 +51,13 @@ for i in range (1,1000):
 
         mulde = random.choice(muldenliste)
         
-        matest.spieler1 = not matest.spieler1
         matest.spielfeld, reward = matest.get_spielfeld_and_reward_after_action(matest.spielfeld, mulde)
+       
+        
+        print("Spieler 2")
+        print(matest.guess_Q(matest.spielfeld))
         matest.spieler1 = not matest.spieler1
+        matest.print_spielfeld()
 
     #check who won
     
