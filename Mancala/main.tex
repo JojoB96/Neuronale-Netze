@@ -1,0 +1,28 @@
+% !TeX encoding=UTF-8
+% !TeX spellcheck=de_DE_frami
+ 
+\documentclass[a4paper,12pt,titlepage]{article}
+
+
+\usepackage{amsthm}
+
+% \include{Dateiname}
+% -> faengt neue Seite mit dem Inhalt
+%    aus Dateiname.tex an
+% \input{Dateiname}
+% -> fuegt den Inhalt aus Dateiname.tex
+%    direkt ein
+\usepackage[utf8]{inputenc}
+
+
+\begin{document}
+\begin{centering}%
+\textbf{\Large Reinforcement Learning am Beispiel Mancala}\\[0.5cm]
+\textbf{Johanna Beier} und \textbf{Viktor Kosin}\\
+Leibniz Universität Hannover\\
+Institut für Angewandte Mathematik\\[1cm]
+\end{centering}
+\textbf{Abstract} \\ \ \\
+This presentation deals with the training of a neural network to learn playing the two player game mancala, especially the german version \textit{Bohnenspiel}. As a trainingmethod we use reinforcement learning. We trained the agent by having it play serveral times against itself. The agent gets a small reward for choosing states in which it catches beans and a bigger reward if the game is won. While training we allow a small possibility to do random steps. The trained net is tested by counting how many games are won while playing against a random player or ???
+ergebnisse: ??? gut? Reinforcement geeignet?
+\end{document}
