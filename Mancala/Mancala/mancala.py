@@ -12,13 +12,11 @@ import random
 
 from copy import deepcopy
 
-
-
 # own libraries
 import Network
 
 class Mancala(object):
-    def __init__(self, exploration_rate = 0.3, network_layers = 4 , name = 'default_neurons'):
+    def __init__(self, exploration_rate = 0.3, network_layers = 4 , name = 'default_neurons', a = 0.1):
     # the Parameters are optional and are used to initialize a suitable neuronal network for the Game:
     #   exploration_rate:   scalar, determines with wich rate an random action should be done
     #   network_layers  :   scalar, contains the number of layers for the neuronal network
@@ -29,7 +27,7 @@ class Mancala(object):
         # self.spielfeld[13] = Schatzmulde von Spieler 2
         
         self.exploration_rate   = exploration_rate
-        self.rewards            = [0.04] 
+        self.rewards            = [1] 
         # rewards[0]:   Das Netzwerk bekommt einen Punkt für jede Kugel die es faengt
         # rewards[.]:   *Moegliche weitere Belohnungen / Strafen*
     
@@ -37,8 +35,8 @@ class Mancala(object):
         self.name               = name
         
         # Parameter for the q-function
-        self.a                  = 0.5
-        self.discount           = 0.2
+        self.a                  = a
+        self.discount           = 0.8
         self.spieler1           = True
         
         self.turn               = [6,7,8,9,10,11,0,1,2,3,4,5,13,12]
@@ -86,7 +84,7 @@ class Mancala(object):
         
         np.put(x, legal, np.ones(len(legal)))
         gQ    = np.multiply(gQ, x)
-        
+       # print(gQ)
         return gQ
     
     
@@ -142,8 +140,9 @@ class Mancala(object):
             tmp_spielfeld[0:6]  = [0,0,0,0,0,0]
             tmp_spielfeld[6:12] = [0,0,0,0,0,0]
             
-        #if tmp_spielfeld[12] >36:
-         #reward += 50
+        if tmp_spielfeld[12] >36:
+            reward += 100
+        
         # Hier könnte man evtl. noch überprüfen ob das Spiel gewonnen wurde und zusaetzliche Belohnung ausschuetten
         #...# unbedingt!!! Führt zu sehr hohen q-values für genau einen Zug... So wird nicht das gesamte spiel bewertet
         
@@ -196,14 +195,15 @@ class Mancala(object):
                 spielfeld2, reward1    = self.get_spielfeld_and_reward_after_action(i, j) # hier kann man noch probieren
                 self.spieler1          = not self.spieler1
                 q2                     = self.guess_Q(spielfeld2)
-                
+               
+                #compute s'
                 spielfeld2, reward2    = self.get_spielfeld_and_reward_after_action(spielfeld2, np.argmax(q2))
                 self.spieler1          = not self.spieler1
-                
+                # Compute Q(a')
                 q2                     = self.guess_Q(spielfeld2)
                 
-                q1[j]                  = (1-self.a)*q1[j] + self.a*(reward1 + self.discount * max(q2))
                 
+                q1[j]                  = (1-self.a)*q1[j] + self.a*(reward1 + self.discount * max(q2))
             q_liste.append(np.multiply(q1, x))
         return [(s,q) for s,q in zip(spielfeld_liste, q_liste)]
 
@@ -218,7 +218,7 @@ class Mancala(object):
                 self.net.stochastic_update(training_data, len(training_data), eta, epochs)
             else:
                 self.net.stochastic_update(training_data, mini_batch_length, eta, epochs)
-            print(i)
+            #print(i)
         # evtl. speichern wir jedes mal / ab und zu die Gewichte und Bias (net.save_network.to_files(name))
         self.net.save_network_to_files(self.name)
     
@@ -229,7 +229,7 @@ class Mancala(object):
             training = self.create_training_data(spielfeld_liste, reward_liste)
             for data in training:
                 training_data.append(data)
-            print(i)
+            #print(i)
             
         if mini_batch_length > len(training_data):
             self.net.stochastic_update(training_data, len(training_data), eta, epochs)

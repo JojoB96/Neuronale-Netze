@@ -125,7 +125,7 @@ class Network(object):
             mini_batches = [full_batch[k:k+mini_batch_length] for k in range(0, n, mini_batch_length)]
             for mini_batch in mini_batches:
                 self.update_weights_and_bias(mini_batch, eta)
-            if test_data:
-                print("Epoch {0}: {1} / {2}".format(j, self.evaluate(test_data),n_test))
-            else:
-                print("Epoch {0} complete".format(j))
+            #if test_data:
+                #print("Epoch {0}: {1} / {2}".format(j, self.evaluate(test_data),n_test))
+            #else:
+                #print("Epoch {0} complete".format(j))
