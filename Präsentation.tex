@@ -1,0 +1,75 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+
+
+%Information to be included in the title page:
+\title{Mancala}
+\author{Viktor Kosin und Johanna Beier}
+\date{04.09.2020}
+
+
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Introduction}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Mancala}
+\begin{itemize}
+\item ancient two player game
+\end{itemize}
+\includegraphics[scale=0.35]{Mancala_board.jpeg}
+\begin{itemize}
+\item\textbf{Goal:} catch more then half of the beans (37) 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Mancala Rules}
+\begin{itemize}
+\item collect all beans of a hole and drop one in each clockwise following hole
+\item catch all beans of the last hole, if it contains $6$, $4$ or $2$ beans
+\item going backwards: collect beans from all following holes with $6$, $4$ or $2$ beans, if there are no other holes in between
+\item game ends if either one player has no more beans or one player catches at least $37$ beans
+\item total sum of beans: catched beans $+$ beans on own side
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{MDP}
+ \begin{itemize}
+ \item Mancala can be represented as a Marcov Decision Process (MDP)
+ \item set of states S, set of actions per state A, action a $\in$ A
+ \item How does the Mancala agent learn to choose the best action?
+ \end{itemize}
+ \end{frame}
+
+ \begin{frame}
+ \frametitle{Reinforcement Learning}
+ \begin{itemize}
+ \item \textbf{Idea:} reward or punish some action
+ \item \textbf{Goal of agent:} maximize total reward
+ \item \textbf{here:} Small Reward for catching beans, big reward for winning the game
+ \item use Q-Learning
+ \end{itemize}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{Q-learning}
+ \begin{itemize}
+ \item small state space: Q-table
+  \item replace Q-table by Q-function 
+  \begin{align}
+  Q(s,a) \leftarrow Q(s,a)+\alpha [r+\gamma \max_{a'} Q(s',a') -Q(s,a)]
+  \end{align}
+ \item agents often need to learn actions that do not lead immediately to a reward
+ \item allow a small amount of random actions (exploration rate)
+ \end{itemize}
+ \end{frame}
+\end{document}
