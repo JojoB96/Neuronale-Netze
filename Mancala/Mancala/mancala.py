@@ -12,11 +12,13 @@ import random
 
 from copy import deepcopy
 
+
+
 # own libraries
 import Network
 
 class Mancala(object):
-    def __init__(self, exploration_rate = 0.3, network_layers = 4 , name = 'default_neurons', a = 0.1):
+    def __init__(self, exploration_rate = 0.3, network_layers = 4 , name = 'default_neurons'):
     # the Parameters are optional and are used to initialize a suitable neuronal network for the Game:
     #   exploration_rate:   scalar, determines with wich rate an random action should be done
     #   network_layers  :   scalar, contains the number of layers for the neuronal network
@@ -27,16 +29,16 @@ class Mancala(object):
         # self.spielfeld[13] = Schatzmulde von Spieler 2
         
         self.exploration_rate   = exploration_rate
-        self.rewards            = [1] 
+        self.rewards            = [0.1] 
         # rewards[0]:   Das Netzwerk bekommt einen Punkt für jede Kugel die es faengt
         # rewards[.]:   *Moegliche weitere Belohnungen / Strafen*
     
-        self.net                = Network.Network(network_layers, name)
+        self.net                = Network.Network(network_layers, name, "sigmoid")
         self.name               = name
         
         # Parameter for the q-function
-        self.a                  = a
-        self.discount           = 0.8
+        self.a                  = 0.7
+        self.discount           = 0.3
         self.spieler1           = True
         
         self.turn               = [6,7,8,9,10,11,0,1,2,3,4,5,13,12]
@@ -54,9 +56,9 @@ class Mancala(object):
         tmp_spielfeld = deepcopy(spielfeld)
         if spielfeld is None:
             tmp_spielfeld = deepcopy(self.spielfeld)
-            
-        if not self.spieler1:
-            tmp_spielfeld = self.get_turned_spielfeld(tmp_spielfeld)
+            if not self.spieler1:
+                tmp_spielfeld = self.get_turned_spielfeld(tmp_spielfeld)
+        
             
         muldenliste = []
             
@@ -67,9 +69,9 @@ class Mancala(object):
         return muldenliste 
     
     
-    def randomfeld(self):               # evtl anpassen, sodass kein Feld ausgewaehlt wird, welches keine Bohnen hat
-        muldenliste = self.check_action()
-       
+    def randomfeld(self, spielfeld = None):               # evtl anpassen, sodass kein Feld ausgewaehlt wird, welches keine Bohnen hat
+        muldenliste = self.check_action(spielfeld)
+        
         return random.choice(muldenliste)
     
         
@@ -77,14 +79,8 @@ class Mancala(object):
         # guess the q-value of the current spielfeld
         tmp_spielfeld = deepcopy(spielfeld)
         
-        gQ    = self.net.feedforward(tmp_spielfeld)
+        gQ    = self.net.feedforward(np.reshape(tmp_spielfeld,(14,1)))
         
-        legal = self.check_action(tmp_spielfeld)
-        x     = np.zeros(len(gQ))
-        
-        np.put(x, legal, np.ones(len(legal)))
-        gQ    = np.multiply(gQ, x)
-       # print(gQ)
         return gQ
     
     
@@ -92,14 +88,24 @@ class Mancala(object):
         #choose the action that will end to the highest q-value (according to the neural network)
         gQ    = self.guess_Q(spielfeld)
         
-        return np.argmax(gQ)
+        legal = self.check_action(spielfeld)
+        x     = np.zeros((len(gQ),1))
+        
+        np.put(x, legal, np.ones(len(legal)))
+        gQ    = np.multiply(gQ, x)
+        
+        b = np.argmax(gQ)
+        if max(gQ) < 10^(-10):
+            b = self.randomfeld(spielfeld)
+        
+        return b
         
         
     def get_next_action(self, spielfeld):
         if random.random() > self.exploration_rate:
             return self.greedy_action(spielfeld)
         else:
-            return self.randomfeld()
+            return self.randomfeld(spielfeld)
         
         
     def get_spielfeld_and_reward_after_action(self, spielfeld, action):
@@ -141,8 +147,7 @@ class Mancala(object):
             tmp_spielfeld[6:12] = [0,0,0,0,0,0]
             
         if tmp_spielfeld[12] >36:
-            reward += 100
-        
+            reward += 50
         # Hier könnte man evtl. noch überprüfen ob das Spiel gewonnen wurde und zusaetzliche Belohnung ausschuetten
         #...# unbedingt!!! Führt zu sehr hohen q-values für genau einen Zug... So wird nicht das gesamte spiel bewertet
         
@@ -152,6 +157,9 @@ class Mancala(object):
             # Wenn nicht Spieler1 am Zug war, sondern Spieler2, dann drehe das Spielfeld zurück
             tmp_spielfeld  = self.get_turned_spielfeld(tmp_spielfeld)
         #----------------------------------#
+        
+        if bohnen is 0:
+            reward = -1
         
         #print(tmp_spielfeld)
         return tmp_spielfeld, reward
@@ -184,28 +192,31 @@ class Mancala(object):
         
         for i, r in zip(spielfeld_liste, reward_liste):
             q1    = self.guess_Q(i)
-            legal = self.check_action(i)
-            x     = np.zeros(len(q1))
-        
-            np.put(x, legal, np.ones(len(legal)))
-            
+            #legal = self.check_action(i)
+            #x     = np.zeros((len(q1),1))
+            #np.put(x, legal, np.ones((len(legal),1)))
+            #q1 = np.multiply(q1, x)
             
             
             for j in range(6):
                 spielfeld2, reward1    = self.get_spielfeld_and_reward_after_action(i, j) # hier kann man noch probieren
                 self.spieler1          = not self.spieler1
-                q2                     = self.guess_Q(spielfeld2)
-               
-                #compute s'
-                spielfeld2, reward2    = self.get_spielfeld_and_reward_after_action(spielfeld2, np.argmax(q2))
+                q2                     = self.greedy_action(self.get_turned_spielfeld(spielfeld2))
+                
+                spielfeld2, reward2    = self.get_spielfeld_and_reward_after_action(spielfeld2, q2)
                 self.spieler1          = not self.spieler1
-                # Compute Q(a')
+                
                 q2                     = self.guess_Q(spielfeld2)
+                legal = self.check_action(spielfeld2)
+                x     = np.zeros((len(q2),1))
+                np.put(x, legal, np.ones((len(legal),1)))
+                q2 = np.multiply(q2, x)
                 
+                q1[j]                  = (1-self.a)*q1[j] + self.a*(reward1-reward2 + self.discount * max(q2))
                 
-                q1[j]                  = (1-self.a)*q1[j] + self.a*(reward1 + self.discount * max(q2))
-            q_liste.append(np.multiply(q1, x))
-        return [(s,q) for s,q in zip(spielfeld_liste, q_liste)]
+            #q_liste.append(np.multiply(q1, x))
+            q_liste.append(q1)
+        return [(np.reshape(s,(14,1)),q) for s,q in zip(spielfeld_liste, q_liste)]
 
     
     
@@ -213,12 +224,13 @@ class Mancala(object):
         for i in range(iterations):
             spielfeld_liste, reward_liste = self.play()
             training_data = self.create_training_data(spielfeld_liste, reward_liste)
-            
+            #print(training_data)
+            #input()
             if mini_batch_length > len(training_data):
                 self.net.stochastic_update(training_data, len(training_data), eta, epochs)
             else:
                 self.net.stochastic_update(training_data, mini_batch_length, eta, epochs)
-            #print(i)
+            print(i)
         # evtl. speichern wir jedes mal / ab und zu die Gewichte und Bias (net.save_network.to_files(name))
         self.net.save_network_to_files(self.name)
     
@@ -229,7 +241,7 @@ class Mancala(object):
             training = self.create_training_data(spielfeld_liste, reward_liste)
             for data in training:
                 training_data.append(data)
-            #print(i)
+            print(i)
             
         if mini_batch_length > len(training_data):
             self.net.stochastic_update(training_data, len(training_data), eta, epochs)
