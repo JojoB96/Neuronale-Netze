@@ -26,6 +26,7 @@
 \end{itemize}
 \includegraphics[scale=0.35]{Mancala_board.jpeg}
 \begin{itemize}
+\item \textbf{as vector:} $[6,6,6,6,6,6, | 6,6,6,6,6,6, |0,0]$
 \item\textbf{Goal:} catch more then half of the beans (37) 
 \end{itemize}
 \end{frame}
@@ -55,7 +56,7 @@
  \begin{itemize}
  \item \textbf{Idea:} reward or punish some action
  \item \textbf{Goal of agent:} maximize total reward
- \item \textbf{here:} Small Reward for catching beans, big reward for winning the game
+ \item \textbf{here:} Small reward for catching beans, bigger reward for winning the game
  \item use Q-Learning
  \end{itemize}
  \end{frame}
@@ -73,15 +74,16 @@
  \end{itemize}
  \end{frame}
  
- 
  \begin{frame}
- \frametitle{}
- \begin{itemize}
- \item \textbf{Idea:} reward or punish some action
- \item \textbf{Goal of agent:} maximize total reward
- \item \textbf{here:} Small Reward for catching beans, big reward for winning the game
- \item use Q-Learning
- \end{itemize}
+ \frametitle{Netz}
+ bild netz, dass wir verwenden
+ \end{frame}
+  \begin{frame}
+ \frametitle{Netz}
+\begin{itemize}
+\item \textbf{activation function:} Sigmoidfunction
+\item learningrate for the update-weights-function
+\end{itemize}
  \end{frame}
  
  \begin{frame}
@@ -90,7 +92,20 @@
  \end{frame}
  
  \begin{frame}
+ \frametitle{play}
+ 
+ \end{frame}
+ 
+ 
+ \begin{frame}
  \frametitle{Training}
+ \begin{itemize}
+\item let two agents play against each other and save pairs of actions and rewards
+\item update for each boardstate and action the underlying Q-function
+\item save each board state and dedicated Q-values as training data
+\item feedforward a boardstate to the net
+\item loss $=$ output $-$ Q-values
+\end{itemize}
  \end{frame}
  
  \begin{frame}
