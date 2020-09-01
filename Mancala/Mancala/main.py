@@ -17,7 +17,7 @@ size = 1000
 for i in range(size):
     print("Training")
     a.train_dq(100, 10, 0.2, 10)
-    a.exploration_rate -= i/(size + size /10)
+    a.exploration_rate -= 1/(size + size /10)
     rate.append(a.get_win_rate(1000))
 
 np.savetxt("rate.csv",rate,delimiter=',')

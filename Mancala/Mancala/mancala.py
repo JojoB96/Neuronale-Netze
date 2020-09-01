@@ -30,19 +30,19 @@ class Mancala(object):
         # self.spielfeld[13] = Schatzmulde von Spieler 2
         
         self.exploration_rate   = exploration_rate
-        self.rewards            = [0.02, 0.5] 
+        self.rewards            = [0.02, 1.0] 
         # rewards[0]:   Das Netzwerk bekommt einen Punkt für jede Kugel die es faengt
         # rewards[.]:   *Moegliche weitere Belohnungen / Strafen*
     
-        self.net                = Network.Network(network_layers, name, "MeanValue")
+        self.net                = Network.Network(network_layers, name, "sigmoid")
         self.name               = name
         
-        self.net2               = Network.Network(network_layers, name2, "MeanValue")
+        self.net2               = Network.Network(network_layers, name2, "sigmoid")
         self.name2              = name2
         
         # Parameter for the q-function
-        self.a                  = 0.2
-        self.discount           = 0.9
+        self.a                  = 0.5
+        self.discount           = 0.7
         self.spieler1           = True
         
         self.turn               = [6,7,8,9,10,11,0,1,2,3,4,5,13,12]
