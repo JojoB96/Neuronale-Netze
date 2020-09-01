@@ -88,7 +88,17 @@
  
  \begin{frame}
  \frametitle{Backpropagtion}
- 
+ \begin{itemize}
+ \item[\textbf{1. Step}] Generate training data: for a given input set an expected output (e.g. with Q-function)
+ \item[\textbf{2. Step}] Calculate for the input $a^{x,1}$:
+ \begin{itemize}
+ \item activation $a^{x,l}$ of layer $l=2,3,...,L$ by
+ $$a^{x,l} = \sigma(w^l a^{x,l-1} + b^l)$$
+ \item Output error $\delta^{x,L}$
+ \item Backpropagate error to each layer: $\delta^{x,l}$
+ \end{itemize}
+ \item[3. Step] Use error of each layer to update weights and biases 
+ \end{itemize}
  \end{frame}
  
  \begin{frame}
