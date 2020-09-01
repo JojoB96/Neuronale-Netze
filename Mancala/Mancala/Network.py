@@ -30,12 +30,28 @@ def d_ReLU(z):
         x = [1. * (a[0] > 0) for a in z]
     return np.reshape(x,(len(x),1))
 
+def MeanValue(a,y):
+    temp =  a - y
+    return (1. / len(y)) * temp
+
+def HyperbolicTangent(z):
+    x = np.sinh(z)/np.cosh(z)
+    return x
+
+def d_HyperbolicTangent(z):
+    x = 2./(np.cosh(2.*z) + 1.)
+    return x
+
+def CrossEntropy(a,y):
+    a = np.clip(a,1e-10,1-1e-10)
+    return (1. / len(y)) * (np.divide(-y,a)+np.divide(np.ones_like(y)-y,np.ones_like(a)-a))
+
 def sigmoid_perceptron(activation, weight, bias):
     return sigmoid( np.dot(weight, activation) + bias )
 
 class Network(object):
     
-    def __init__(self, layers = None, name = None, act_func = "sigmoid"):
+    def __init__(self, layers = None, name = None, act_func = "sigmoid", cost = "MeanValue"):
         if layers is None:    
             self.layers = 0
             self.biases = []
@@ -54,6 +70,13 @@ class Network(object):
         elif act_func is "ReLU":
             self.act_func   = ReLU
             self.d_act_func = d_ReLU
+        elif act_func is "HyperbolicTangent":
+            self.act_func   = HyperbolicTangent
+            self.d_act_func = d_HyperbolicTangent
+        if cost is "CrossEntropy":
+            self.cost      = CrossEntropy
+        elif cost is "MeanValue":
+            self.cost      = MeanValue
             
     def generate_random_network(self, size):
         self.layers  = len(size)
@@ -110,7 +133,7 @@ class Network(object):
         grad_b = [np.zeros_like(b) for b in self.biases]
         grad_w = [np.zeros_like(w) for w in self.weights]
         
-        delta      = (activations[-1] - expected_result) * self.d_act_func(zs[-1])
+        delta      = self.cost(activations[-1],expected_result) * self.d_act_func(zs[-1])
         grad_b[-1] = delta
         grad_w[-1] = np.dot(delta,activations[-2].transpose())
         for l in range(2,self.layers):
