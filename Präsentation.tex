@@ -103,7 +103,12 @@
  
  \begin{frame}
  \frametitle{play}
- 
+ \begin{itemize}
+\item choose action by feeding the current board to the net and take the argmax of the output
+\item get spielfeld and reward after action(self.spielfeld, action)
+\item append board and reward to trainingslists
+\item change player (turn board)
+\end{itemize}
  \end{frame}
  
  
@@ -118,7 +123,28 @@
 \end{itemize}
  \end{frame}
  
- \begin{frame}
- \frametitle{Results}
- \end{frame}
+\begin{frame}
+\frametitle{Ideas for finding errors}
+\begin{itemize}
+\item reduce rules $\rightarrow$ get very simple game
+\item reduce board size from 12 to 6/4 holes with 4/2 beans
+\item print q-values, feedforward and compare
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{simple rules}
+\begin{itemize}
+\item game wins or tied after $6$ trainingsiterations
+\item q-function and feedforward look good
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\begin{itemize}
+\frametitle{simple board}
+\item
+\end{itemize}
+\end{frame}
 \end{document}
