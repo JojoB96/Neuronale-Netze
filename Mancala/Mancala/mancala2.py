@@ -41,8 +41,8 @@ class Mancala(object):
         self.name2              = name2
         
         # Parameter for the q-function
-        self.a                  = 0.001
-        self.discount           = 0.99
+        self.a                  = 0.01
+        self.discount           = 0.8
         self.spieler1           = True
         
         self.turn               = [2,3,0,1,5,4]
@@ -139,7 +139,9 @@ class Mancala(object):
         # Ueberpruefe dies nun im Uhrzeigersinn bis die Frage mit Nein beantwortet wird
         for b in range(bohnen):
             b = bohnen - b 
-            if (tmp_spielfeld[(action+b) %4] == 2):# or tmp_spielfeld[(action+b) %12] == 4 or tmp_spielfeld[(action+b) %12] == 6):
+           # print("a+b",action+b)
+            if (tmp_spielfeld[(action+b) %4] == 2 or tmp_spielfeld[(action+b) %4] == 4 or tmp_spielfeld[(action+b) %4] == 6):
+              #  print("!!!!")
                 tmp_spielfeld[4] += tmp_spielfeld[(action+b) %4]
                 tmp_spielfeld[(action+b) %4] = 0
             else:
@@ -160,7 +162,7 @@ class Mancala(object):
             tmp_spielfeld[5] += sum(tmp_spielfeld[0:2]) + sum(tmp_spielfeld[2:4])
             tmp_spielfeld[0:2]  = [0,0]
             tmp_spielfeld[2:4] = [0,0]
-            reward += self.rewards[1]
+            reward += 20#self.rewards[1]
             
         elif tmp_spielfeld[5] > 4:
             tmp_spielfeld[5] += sum(tmp_spielfeld[0:2]) + sum(tmp_spielfeld[2:4])
@@ -172,7 +174,7 @@ class Mancala(object):
         #...# unbedingt!!!
         
         if tmp_spielfeld[4] ==4 :
-            reward +=5
+            reward +=0.1
         # Dies muesste man evtl rausnehmen #
         if not self.spieler1:
             # Wenn nicht Spieler1 am Zug war, sondern Spieler2, dann drehe das Spielfeld zurück
@@ -211,8 +213,14 @@ class Mancala(object):
         Spielfeldliste = [deepcopy(self.spielfeld)]
         reward_liste   = [0.0]
         while not(np.array_equal(self.spielfeld[0:2] ,[0,0]) or np.array_equal(self.spielfeld[2:4] ,[0,0]) or self.spielfeld[4]>4 or self.spielfeld[5]>4):
+            feld                   = self.randomfeld(self.get_turned_spielfeld(self.spielfeld))
+            self.spielfeld, reward = self.get_spielfeld_and_reward_after_action(self.spielfeld, feld)
+            Spielfeldliste.append(deepcopy(self.spielfeld))
+            self.spieler1          = not self.spieler1
+                
+            
             feld                   = self.get_next_action(self.spielfeld)
-            print(self.guess_Q(self.spielfeld))
+           # print(self.guess_Q(self.spielfeld))
             #input()
             self.spielfeld, reward = self.get_spielfeld_and_reward_after_action(self.spielfeld, feld)
             #print(self.spielfeld , feld)
@@ -223,10 +231,11 @@ class Mancala(object):
             #reward_liste[-2] -= reward_liste[-1]
             if not(np.array_equal(self.spielfeld[0:2] ,[0,0]) or np.array_equal(self.spielfeld[2:4] ,[0,0]) or self.spielfeld[4]>4 or self.spielfeld[5]>4):
                 self.spieler1          = not self.spieler1
-                feld                   = self.randomfeld(self.get_turned_spielfeld(self.spielfeld))
+                feld                   = self.get_next_action(self.spielfeld)
+               #  print(self.guess_Q(self.spielfeld))
+            #input()
                 self.spielfeld, reward = self.get_spielfeld_and_reward_after_action(self.spielfeld, feld)
-                Spielfeldliste.append(deepcopy(self.spielfeld))
-                self.spieler1          = not self.spieler1
+            
                 #print(self.spielfeld, feld)
                 #input()
         #input()

@@ -8,17 +8,17 @@ Created on Mon Jul 13 11:20:54 2020
 
 import numpy as np
 import random
-import mancala as m
+import mancala2 as m
 
 ma = m.Mancala()
-ma.net.generate_random_network([6,6,2])
+ma.net.generate_random_network([6,4,2])
 #input()
 ma.name = 'test3'
 print("Start")
 #print(ma.net.biases)
 print(ma.spielfeld)   
 ma.print_spielfeld()
-ma.train_net(50,50,0.1,5)
+ma.train_net(1,1,1,5)
 
 print("trained")
 #print(ma.play())
@@ -34,7 +34,7 @@ for i in range (1,20):
     Spieler1gewonnen = 0
     Spieler2gewonnen = 0
     unentschieden = 0
-    ma.train_net(5,50,0.1,5)
+    ma.train_net(5,1,1,5)
 
 
     matest = m.Mancala(exploration_rate = 0.0, name = "test3", network_layers = 3)
@@ -46,9 +46,10 @@ for i in range (1,20):
     #while not(matest.spielfeld[12]>36 or matest.spielfeld[13]>36 or (matest.spielfeld[12] == 36 and matest.spielfeld[13] == 36)):
         #Spieler 1 netz
         
-        
-        #print("Spieler 2")
-        #print(matest.guess_Q(matest.spielfeld))
+          #  matest.print_spielfeld()
+       
+          #  print("Spieler 1")
+           # print(matest.guess_Q(matest.spielfeld))
             
         #random spieler 2
             
@@ -59,13 +60,15 @@ for i in range (1,20):
                 break
             mulde = random.choice(muldenliste) 
             matest.spielfeld, reward = matest.get_spielfeld_and_reward_after_action(matest.spielfeld, mulde)
-       # matest.print_spielfeld()
         
             matest.spieler1 = not matest.spieler1
            
-      #  print("Spieler 1")
-       # print(matest.guess_Q(matest.spielfeld))
+          #  matest.print_spielfeld()
+           # print("Spieler2")
+            #print(matest.guess_Q(matest.spielfeld))
+           # feld =np.argmax(matest.guess_Q(matest.spielfeld))# 
             feld = matest.get_next_action(matest.spielfeld)  
+            #print(feld)
             matest.spielfeld, reward = matest.get_spielfeld_and_reward_after_action(matest.spielfeld, feld)
           
            # matest.print_spielfeld()
