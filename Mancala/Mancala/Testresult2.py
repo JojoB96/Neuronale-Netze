@@ -433,7 +433,7 @@ ma.net.generate_random_network([6,30,2])
 ma.name = 'testeinfach'
 print("Start")
 ma.print_spielfeld()
-for j in range(1,20): 
+for j in range(1,100): 
     ma.train_net(100,1,1,5)
     matest = Mancala(exploration_rate = 0.0, name = "testeinfach", network_layers = 3)
 
@@ -444,8 +444,18 @@ for j in range(1,20):
     for j in range(1,10):
         
         while not(np.array_equal(matest.spielfeld[0:2] ,[0,0]) or np.array_equal(matest.spielfeld[2:4] ,[0,0]) or matest.spielfeld[4]>4 or matest.spielfeld[5]>4): # muesste es nicht ausreichen zu ueberpruefen, ob die schatzmulden mehr als die haelfte der Kugeln beinhalten? ( also self.spielfeld[12] > 36 or also self.spielfeld[13] > 36
-           
-            print(matest.spielfeld)
+            #matest.spielfeld = matest.get_turned_spielfeld(matest.spielfeld)
+            feld = matest.get_next_action(matest.spielfeld)  
+          #  print("guessQ",matest.guess_Q(matest.spielfeld))
+           # print(feld, matest.spielfeld[feld])
+            matest.spielfeld, reward = matest.get_spielfeld_and_reward_after_action(matest.spielfeld, feld)
+            #print(matest.spielfeld)
+
+           # matest.print_spielfeld()
+            matest.spieler1 = not matest.spieler1
+            #matest.spielfeld = matest.get_turned_spielfeld(matest.spielfeld)
+
+            
 
             muldenliste = matest.check_action()
             if not muldenliste:
@@ -455,17 +465,12 @@ for j in range(1,20):
             mulde = random.choice(muldenliste) 
             matest.spielfeld, reward = matest.get_spielfeld_and_reward_after_action(matest.spielfeld, mulde)
         
-           # matest.print_spielfeld()
+            
+            
+            
             matest.spieler1 = not matest.spieler1
-            matest.spielfeld = matest.get_turned_spielfeld(matest.spielfeld)
-            feld = matest.get_next_action(matest.spielfeld)  
-            print(matest.spielfeld)
-            print("guessQ",matest.guess_Q(matest.spielfeld))
-            print(feld, matest.spielfeld[feld])
-            matest.spielfeld, reward = matest.get_spielfeld_and_reward_after_action(matest.spielfeld, feld)
-         
-            matest.spieler1 = not matest.spieler1
-            matest.spielfeld = matest.get_turned_spielfeld(matest.spielfeld)
+         #   matest.spielfeld = matest.get_turned_spielfeld(matest.spielfeld)
+          #  print(matest.spielfeld)
 
         
     #check who won
