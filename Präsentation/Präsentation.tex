@@ -1,0 +1,212 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+
+
+
+%Information to be included in the title page:
+\title{Mancala}
+\author{Viktor Kosin und Johanna Beier}
+\date{04.09.2020}
+
+
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{structure}
+\begin{itemize}
+\item Mancala rules
+\item Q-learning
+\item Backpropagation
+\item Network
+\item Training
+\item Troubleshootin
+\item Results
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Mancala}
+\begin{itemize}
+\item ancient two player game
+\end{itemize}
+\includegraphics[scale=0.15]{board}
+\begin{itemize}
+\item \textbf{as vector:} $[6,6,6,6,6,6, | 6,6,6,6,6,6, |0,0]$
+\item\textbf{Goal:} catch more then half of the beans (37) 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Mancala Rules}
+\begin{itemize}
+\item collect all beans of a hole and drop one in each clockwise following hole
+\item catch all beans of the last hole, if it contains $6$, $4$ or $2$ beans
+\item going backwards: collect beans from all following holes with $6$, $4$ or $2$ beans, if there are no other holes in between
+\item game ends if either one player has no more beans or one player catches at least $37$ beans
+\item total sum of beans: catched beans $+$ beans on own side
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{MDP}
+ \begin{itemize}
+ \item Mancala can be represented as a Marcov Decision Process (MDP)
+ \item set of states S, set of actions per state A, action a $\in$ A
+ \item How does the Mancala agent learn to choose the best action?
+ \end{itemize}
+ \end{frame}
+
+ \begin{frame}
+ \frametitle{Reinforcement Learning}
+ \begin{itemize}
+ \item \textbf{Idea:} reward or punish some action
+ \item \textbf{Goal of agent:} maximize total reward
+ \item \textbf{here:} Small reward for catching beans, bigger reward for winning the game
+ \item use Q-Learning
+ \end{itemize}
+ \end{frame}
+ 
+  \begin{frame}
+  \frametitle{Q-learning}
+ \begin{itemize}
+ \item small state space: Q-table
+  \item replace Q-table by Q-function 
+  \begin{align}
+  Q(s,a) \leftarrow Q(s,a)+\alpha [r+\gamma \max_{a'} Q(s',a') -Q(s,a)]
+  \end{align}
+ \item agents often need to learn actions that do not lead immediately to a reward
+ \item allow a small amount of random actions (exploration rate)
+ \end{itemize}
+ \end{frame}
+ 
+ \begin{frame}
+ \frametitle{Netz}
+ bild netz, dass wir verwenden
+ \end{frame}
+  \begin{frame}
+ \frametitle{Netz}
+\begin{itemize}
+\item \textbf{activation function:} Sigmoidfunction
+\item learningrate for the update-weights-function
+\end{itemize}
+ \end{frame}
+ 
+ \begin{frame}
+ \frametitle{Backpropagtion}
+ \begin{itemize}
+ \item[\textbf{1. Step}] Generate training data: for a given input set an expected output (e.g. with Q-function)
+ \item[\textbf{2. Step}] Calculate for the input $a^{x,1}$:
+ \begin{itemize}
+ \item activation $a^{x,l}$ of layer $l=2,3,...,L$ by
+ $$a^{x,l} = \sigma(w^l a^{x,l-1} + b^l)$$
+ \item Output error $\delta^{x,L}$
+ \item Backpropagate error to each layer: $\delta^{x,l}$
+ \end{itemize}
+ \item[3. Step] Use error of each layer to update weights and biases 
+ \end{itemize}
+ \end{frame}
+
+ \begin{frame}
+ \frametitle{play}
+ 
+ \end{frame}
+ 
+ 
+ \begin{frame}
+ \frametitle{Training}
+ \begin{itemize}
+\item let two agents play against each other and save pairs of actions and rewards
+\item update for each boardstate and action the underlying Q-function
+\item save each board state and dedicated Q-values as training data
+\item feedforward a boardstate to the net
+\item loss $=$ output $-$ Q-values
+\end{itemize}
+ \end{frame}
+ 
+ \begin{frame}
+ \frametitle{simple game}
+\begin{itemize}
+\item $[1,1,5,1,1,1|1,1,5,1,1,1|0,0]$
+\item second player has advantage to play at least tied
+\item network ist startplayer
+\item after some trainingiterations the second player always loosese
+\item $\rightarrow$ network is ok
+\end{itemize}
+ \end{frame}
+
+ \begin{frame}
+ \frametitle{simple board}
+ \begin{itemize}
+\item reduce the board size: $[2,2|2,2|0,0]$
+\item compare guessed Q-Values with choice of hole
+\item Q-function decides for wrong side $\rightarrow$ solve this error
+\item net performs good, if it starts in the right direction
+\item use flexible exploration rate
+\end{itemize}
+ \end{frame}
+
+ \begin{frame}
+ \frametitle{simple board results}
+ \center{\includegraphics[scale=0.5]{kleinesNetz10}}
+\begin{itemize}
+\item $1$ hidden layer with 10 neurons
+\item $1$ Unit = 100 Trainingiterations
+\end{itemize}
+ \end{frame}
+
+ \begin{frame}
+ \frametitle{simple board results: jump}
+ \includegraphics[scale=0.7]{kleinesNetz20.2}
+ \end{frame}
+
+ \begin{frame}
+ \frametitle{Mancala with $4$ beans per hole}
+ \begin{itemize}
+\item  $[4,4,4,4,4,4|4,4,4,4,4,4|0,0]$
+\item transfer findings to this game (flexible exploration rate, ...)
+\item learns something but oscillates 
+\item  learns better if start in right direction
+\end{itemize}
+ \end{frame}
+
+ \begin{frame}
+ \frametitle{Mancala with $4$ beans per hole}
+ \includegraphics[scale=0.7]{4holeos}
+ \end{frame}
+
+\begin{frame}
+\frametitle{improved Mancala with $4$ beans per hole}
+\begin{itemize}
+\item Idea: reduze learining rate if net performs good otherwise increase learning rate
+\item reward only winning not catching beans
+\end{itemize}
+%\begin{lstlisting}
+%if Spieler1gewonnen >80:
+ %       l=0.01
+  %      ma.a = ma.a/10
+   %     ma.exploration_rate = 0
+    %elif Spieler1gewonnen >70:
+     %   l=0.01
+      %  ma.a = ma.a/10
+      %  ma.exploration_rate = 0.1
+  %  else:
+   %     l=1
+    %    ma.a = ma.a+0.1
+     %   ma.exploration_rate = 0.3
+%\end{lstlisting}
+\end{frame}
+
+ \begin{frame}
+\frametitle{improved Mancala with $4$ beans per hole}
+ \includegraphics[scale=0.7]{4holestrainingconvergence}
+ \end{frame}
+
+\begin{frame} 
+\frametitle{Results}
+\end{frame}
+\end{document}
