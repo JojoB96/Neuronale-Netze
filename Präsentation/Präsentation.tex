@@ -86,10 +86,6 @@
  \end{itemize}
  \end{frame}
  
- \begin{frame}
- \frametitle{Netz}
- bild netz, dass wir verwenden
- \end{frame}
   \begin{frame}
  \frametitle{Netz}
 \begin{itemize}
@@ -97,38 +93,75 @@
 \item learningrate for the update-weights-function
 \end{itemize}
  \end{frame}
+
+ \begin{frame}
+ \frametitle{play}
+ \begin{itemize}
+\item choose action by feeding the current board to the net and take the argmax of the output
+\item get board and reward after action 
+\item append board and reward to trainingslists
+\item change player (turn board)
+\end{itemize}
+\end{frame}
  
  \begin{frame}
+ \frametitle{Rewards and Discount}
+ \begin{itemize}
+ 	\item choosing the right rewards is key for the Q-function to work properly
+ 	\begin{itemize}
+ 		\item too high rewards lead to large q-value estimations (maybe higher than the activation function would allow)\\
+ 		$\Rightarrow$ the network is going to increase q-values with every iteration
+ 		\item too low rewards lead to q-values close to zero
+ 		\item get 0.05 as reward for every caught bean and 10.0 for a winning action
+ 	\end{itemize}
+ \item selecting the right discount and learning rate is difficult and depends on the reward strategy
+ \end{itemize}
+\end{frame}
+ 
+ \begin{frame}
+ \frametitle{Training}
+ \begin{itemize}
+\item let the agent play against itself and save pairs of actions and rewards
+\item update for each board state and action the underlying Q-function
+\item save each board state and dedicated Q-values as training data
+\item feedforward a boardstate to the net
+\item loss $=$ output $-$ Q-values
+\end{itemize}
+ \end{frame}
+ 
+  \begin{frame}
  \frametitle{Backpropagtion}
  \begin{itemize}
  \item[\textbf{1. Step}] Generate training data: for a given input set an expected output (e.g. with Q-function)
  \item[\textbf{2. Step}] Calculate for the input $a^{x,1}$:
  \begin{itemize}
  \item activation $a^{x,l}$ of layer $l=2,3,...,L$ by
- $$a^{x,l} = \sigma(w^l a^{x,l-1} + b^l)$$
- \item Output error $\delta^{x,L}$
- \item Backpropagate error to each layer: $\delta^{x,l}$
+ $$a^{x,l} = \sigma(z^{x,l}),\quad z^{x,l} = w^l a^{x,l-1} + b^l$$
+ \item Output error $\delta^{x,L} = \nabla_a C_x \odot \sigma'(z^{x,L})$
+ \item Backpropagate error to each layer: 
+ $$\delta^{x,l} = ((w^{l+1})^T \delta^{x,l+1}) \odot \sigma' (z^{x,L})$$
  \end{itemize}
- \item[3. Step] Use error of each layer to update weights and biases 
+ \item[\textbf{3. Step}] Use error of each layer to update weights and biases 
  \end{itemize}
- \end{frame}
-
- \begin{frame}
- \frametitle{play}
- 
- \end{frame}
- 
+ \end{frame} 
  
  \begin{frame}
- \frametitle{Training}
- \begin{itemize}
-\item let two agents play against each other and save pairs of actions and rewards
-\item update for each boardstate and action the underlying Q-function
-\item save each board state and dedicated Q-values as training data
-\item feedforward a boardstate to the net
-\item loss $=$ output $-$ Q-values
+\frametitle{Results for a straightforward adaptation}
+\includegraphics[scale=0.65]{gewinnrate.jpg}
+\begin{itemize}
+\item simple q-learning tends to stagnate very early, gets worse after some time
+%\item the q-values of multiple possible actions get close to 1
+\item a 'large' learning rate doesn't always improve the rate
 \end{itemize}
- \end{frame}
+\end{frame}
+ 
+\begin{frame}
+\frametitle{Origins of problems}
+\begin{itemize}
+\item couldn't identify any coherence
+\item to see how the network learns Mancala, we need to simplify the game
+\end{itemize}
+\end{frame} 
  
  \begin{frame}
  \frametitle{simple game}
@@ -163,7 +196,7 @@
 
  \begin{frame}
  \frametitle{simple board results: jump}
- \includegraphics[scale=0.7]{kleinesNetz20.2}
+ %\includegraphics[scale=0.7]{kleinesNetz20.2}
  \end{frame}
 
  \begin{frame}
@@ -200,6 +233,33 @@
  \end{frame}
 
 \begin{frame} 
-\frametitle{Results}
+\frametitle{Adapting learning of Mancala}
+\begin{itemize}
+\item generating a random network of size $[14,10,6]$
+Picture
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Possible improvements}
+\begin{itemize}
+\item use multiple network to guess optimal parameters of q-function and network, e.g:
+\begin{itemize}
+\item exploration rate, rewards
+\item discount, learning rate
+\end{itemize}
+\item use tree search algorithm to guess rewards over multiple future actions
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Approved agents of other Mancala like games}
+\begin{itemize}
+\item MinMax
+\item Monte Carlo Tree Search
+\item Asynchronous Advantage Actor-Critic
+\begin{itemize}
+\item runs parallel agents
+\item 3 networks work in concert: input, action and critic
+\end{itemize}
+\end{itemize}
 \end{frame}
 \end{document}
