@@ -78,7 +78,7 @@
  
  \begin{frame}
  \frametitle{Netz}
- bild netz, dass wir verwenden
+
  \end{frame}
   \begin{frame}
  \frametitle{Netz}
@@ -105,9 +105,9 @@
  	\begin{itemize}
  		\item too high rewards lead to a growing q-values (maybe higher than the activation function would allow)
  		\item too low rewards lead to q-values close to zero
- 		\item get 0.05 as reward for every caught item and 1.0 for a winning action
+ 		\item get 0.05 as reward for every caught bean and 1.0 for a winning action
  	\end{itemize}
- \item 
+ \item selecting the right discount is difficult and depends on the reward strategy
  \end{itemize}
 \end{frame}
  
@@ -177,7 +177,7 @@
 \begin{frame}
 \frametitle{Problems}
 \begin{itemize}
-\item during the game the number of items caught per turn varies strongly and lead to very high or very low rewards / q-values
+\item during the game the number of beans caught per turn varies strongly and lead to very high or very low rewards / q-values
 \begin{itemize}
 \item[$\rightarrow$] the error of hidden layers is poorly approximated due to $\sigma'$
 \end{itemize}
@@ -188,6 +188,7 @@
 \begin{frame}
 \frametitle{Possible Solutions}
 \begin{itemize}
+\item work with another activation function
 \item choose a different / more variable reward strategy
 \item add some kind of tree search algorithm or estimate reward for multiple actions with another agent
 \item use more than one neuronal network to reduce overestimation like 'Double Q-Learning' or 'Asynchronous Advantage Actor-Critic' 
