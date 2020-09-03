@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.8.31)  3 SEP 2020 16:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.8.31)  3 SEP 2020 19:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -669,23 +669,37 @@ File: listings.cfg 2020/03/24 1.8d listings configuration
 ))
 Package: listings 2020/03/24 1.8d (Carsten Heinz)
 
-(c:/texlive/2020/texmf-dist/tex/latex/algorithms/algorithmic.sty
-Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
+(c:/texlive/2020/texmf-dist/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
+nment
 
+(c:/texlive/2020/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count319
+\float@exts=\toks47
+\float@box=\box75
+\@float@everytoks=\toks48
+\@floatcapt=\box76
+)
 (c:/texlive/2020/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
-\c@ALC@unique=\count319
-\c@ALC@line=\count320
-\c@ALC@rem=\count321
-\c@ALC@depth=\count322
+\@float@every@algorithm=\toks49
+\c@algorithm=\count320
+)
+(c:/texlive/2020/texmf-dist/tex/latex/algorithms/algorithmic.sty
+Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
+\c@ALC@unique=\count321
+\c@ALC@line=\count322
+\c@ALC@rem=\count323
+\c@ALC@depth=\count324
 \ALC@tlm=\skip63
 \algorithmicindent=\skip64
 )
 (c:/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
 File: l3backend-pdfmode.def 2020-08-07 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count323
-\l__pdf_internal_box=\box75
+\l__kernel_color_stack_int=\count325
+\l__pdf_internal_box=\box77
 )
 (./Präsentation.aux)
 \openout1 = `Präsentation.aux'.
@@ -743,17 +757,17 @@ LaTeX Font Info:    ... okay on input line 16.
 
 (c:/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count324
+\scratchcounter=\count326
 \scratchdimen=\dimen281
-\scratchbox=\box76
-\nofMPsegments=\count325
-\nofMParguments=\count326
-\everyMPshowfont=\toks47
-\MPscratchCnt=\count327
+\scratchbox=\box78
+\nofMPsegments=\count327
+\nofMParguments=\count328
+\everyMPshowfont=\toks50
+\MPscratchCnt=\count329
 \MPscratchDim=\dimen282
-\MPnumerator=\count328
-\makeMPintoPDFobject=\count329
-\everyMPtoPDFconversion=\toks48
+\MPnumerator=\count330
+\makeMPintoPDFobject=\count331
+\everyMPtoPDFconversion=\toks51
 ) (c:/texlive/2020/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -764,7 +778,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 ABD: EveryShipout initializing macros
-\AtBeginShipoutBox=\box77
+\AtBeginShipoutBox=\box79
 Package hyperref Info: Link coloring OFF on input line 16.
 
 (c:/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
@@ -776,7 +790,7 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 (c:/texlive/2020/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count330
+\c@section@level=\count332
 )
 LaTeX Info: Redefining \ref on input line 16.
 LaTeX Info: Redefining \pageref on input line 16.
@@ -863,7 +877,7 @@ Dictionary: translator-numbers-dictionary, Language: English
 English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-\c@lstlisting=\count331
+\c@lstlisting=\count333
  (./Präsentation.nav) [1
 
 {c:/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
@@ -946,16 +960,29 @@ Package pdftex.def Info: 4holeos.png  used on input line 182.
  <./4holeos.png>]
 [19
 
+] (c:/texlive/2020/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+) (./python1.py
+LaTeX Font Info:    Trying to load font information for OML+cmss on input line 
+1.
+LaTeX Font Info:    No file OMLcmss.fd. on input line 1.
+
+LaTeX Font Warning: Font shape `OML/cmss/m/n' undefined
+(Font)              using `OML/cmm/m/it' instead
+(Font)              for symbol `textgreater' on input line 1.
+
+) [20
+
 ]
-<4holestrainingconvergence.png, id=520, 373.395pt x 252.945pt>
+<4holestrainingconvergence.png, id=545, 373.395pt x 252.945pt>
 File: 4holestrainingconvergence.png Graphic file (type png)
 <use 4holestrainingconvergence.png>
-Package pdftex.def Info: 4holestrainingconvergence.png  used on input line 209.
+Package pdftex.def Info: 4holestrainingconvergence.png  used on input line 200.
 
 (pdftex.def)             Requested size: 261.37471pt x 177.06029pt.
- [20
+ [21
 
- <./4holestrainingconvergence.png>] [21
+ <./4holestrainingconvergence.png>] [22
 
 ]
 \tf@nav=\write6
@@ -967,22 +994,26 @@ Package pdftex.def Info: 4holestrainingconvergence.png  used on input line 209.
 \tf@snm=\write8
 \openout8 = `Präsentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 214.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 214.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 205.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 205.
  (./Präsentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 214.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 214.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 205.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 205.
 Package rerunfilecheck Info: File `Präsentation.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
  ) 
 Here is how much of TeX's memory you used:
- 19430 strings out of 480893
- 361758 string characters out of 5911972
- 616797 words of memory out of 5000000
- 34539 multiletter control sequences out of 15000+600000
+ 19975 strings out of 480893
+ 367196 string characters out of 5911972
+ 810441 words of memory out of 5000000
+ 35065 multiletter control sequences out of 15000+600000
  547576 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 63i,14n,67p,780b,545s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 63i,14n,67p,780b,1494s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/tex
 live/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2020/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2020/texmf-dist
@@ -996,10 +1027,10 @@ ve/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2020/te
 xmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2020/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2020/texmf-dist/fonts/type1
 /public/amsfonts/symbols/msam10.pfb>
-Output written on Präsentation.pdf (21 pages, 629445 bytes).
+Output written on Präsentation.pdf (22 pages, 631878 bytes).
 PDF statistics:
- 628 PDF objects out of 1000 (max. 8388607)
- 570 compressed objects within 6 object streams
- 43 named destinations out of 1000 (max. 500000)
+ 653 PDF objects out of 1000 (max. 8388607)
+ 594 compressed objects within 6 object streams
+ 45 named destinations out of 1000 (max. 500000)
  68 words of extra memory for PDF output out of 10000 (max. 10000000)
 

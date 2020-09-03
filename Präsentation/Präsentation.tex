@@ -2,7 +2,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
-\usepackage{algorithmic}
+\usepackage{algorithm,algorithmic}
 
 
 
@@ -187,20 +187,11 @@
 \item Idea: reduce learining rate if net performs good otherwise increase learning rate
 \item reward only winning not catching beans
 \end{itemize}
-%\begin{lstlisting}
-i%f Spieler1gewonnen >80:
- %       l=0.01
-  %      ma.a = ma.a/10
-   %     ma.exploration_rate = 0
-    %elif Spieler1gewonnen >70:
-     %   l=0.01
-      %  ma.a = ma.a/10
-      %  ma.exploration_rate = 0.1
-  %  else:
-   %     l=1
-    %    ma.a = ma.a+0.1
-     %   ma.exploration_rate = 0.3
-%\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\frametitle{flexible parameters}
+\lstinputlisting[language = python]{python1.py}
 \end{frame}
 
  \begin{frame}
