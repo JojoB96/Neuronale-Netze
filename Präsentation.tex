@@ -23,7 +23,7 @@
 \begin{itemize}
 \item ancient two player game
 \end{itemize}
-\includegraphics[scale=0.15]{board}
+%\includegraphics[scale=0.15]{board}
 \end{frame}
 
 \begin{frame}
@@ -89,21 +89,6 @@
  \end{frame}
  
  \begin{frame}
- \frametitle{Backpropagtion}
- \begin{itemize}
- \item[\textbf{1. Step}] Generate training data: for a given input set an expected output (e.g. with Q-function)
- \item[\textbf{2. Step}] Calculate for the input $a^{x,1}$:
- \begin{itemize}
- \item activation $a^{x,l}$ of layer $l=2,3,...,L$ by
- $$a^{x,l} = \sigma(w^l a^{x,l-1} + b^l)$$
- \item Output error $\delta^{x,L}$
- \item Backpropagate error to each layer: $\delta^{x,l}$
- \end{itemize}
- \item[3. Step] Use error of each layer to update weights and biases 
- \end{itemize}
- \end{frame}
- 
- \begin{frame}
  \frametitle{play}
  \begin{itemize}
 \item choose action by feeding the current board to the net and take the argmax of the output
@@ -112,6 +97,19 @@
 \item change player (turn board)
 \end{itemize}
  \end{frame}
+ 
+\begin{frame}
+ \frametitle{Rewards and Discount}
+ \begin{itemize}
+ 	\item choosing the right rewards is key for the Q-Function to work
+ 	\begin{itemize}
+ 		\item too high rewards lead to a growing q-values (maybe higher than the activation function would allow)
+ 		\item too low rewards lead to q-values close to zero
+ 		\item get 0.05 as reward for every caught item and 1.0 for a winning action
+ 	\end{itemize}
+ \item 
+ \end{itemize}
+\end{frame}
  
  
  \begin{frame}
@@ -123,6 +121,22 @@
 \item feedforward a boardstate to the net
 \item loss $=$ output $-$ Q-values
 \end{itemize}
+ \end{frame}
+ 
+ \begin{frame}
+ \frametitle{Backpropagtion}
+ \begin{itemize}
+ \item[\textbf{1. Step}] Generate training data: for a given input set an expected output (e.g. with Q-function)
+ \item[\textbf{2. Step}] Calculate for the input $a^{x,1}$:
+ \begin{itemize}
+ \item activation $a^{x,l}$ of layer $l=2,3,...,L$ by
+ $$a^{x,l} = \sigma(z^{x,l}),\quad z^{x,l} = w^l a^{x,l-1} + b^l$$
+ \item Output error $\delta^{x,L} = \nabla_a C_x \odot \sigma'(z^{x,L})$
+ \item Backpropagate error to each layer: 
+ $$\delta^{x,l} = ((w^{l+1})^T \delta^{x,l+1}) \odot \sigma' (z^{x,L})$$
+ \end{itemize}
+ \item[\textbf{3. Step}] Use error of each layer to update weights and biases 
+ \end{itemize}
  \end{frame}
  
 \begin{frame}
@@ -146,7 +160,37 @@
 \begin{frame}
 \begin{itemize}
 \frametitle{simple board}
-\item
+\item 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Results}
+\includegraphics[scale=0.65]{gewinnrate.jpg}
+\begin{itemize}
+\item simple q-learning tends to stagnate very early
+\item the q-values of multiple possible actions get close to 1
+\item a 'large' learning rate doesn't always improve the rate 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Problems}
+\begin{itemize}
+\item during the game the number of items caught per turn varies strongly and lead to very high or very low rewards / q-values
+\begin{itemize}
+\item[$\rightarrow$] the error of hidden layers is poorly approximated due to $\sigma'$
+\end{itemize}
+\item the q-function is overestimating actions
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Possible Solutions}
+\begin{itemize}
+\item choose a different / more variable reward strategy
+\item add some kind of tree search algorithm or estimate reward for multiple actions with another agent
+\item use more than one neuronal network to reduce overestimation like 'Double Q-Learning' or 'Asynchronous Advantage Actor-Critic' 
 \end{itemize}
 \end{frame}
 
