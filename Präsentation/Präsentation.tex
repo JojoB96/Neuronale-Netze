@@ -2,6 +2,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
+\usepackage{algorithmic}
 
 
 
@@ -17,14 +18,14 @@
 \frame{\titlepage}
 
 \begin{frame}
-\frametitle{structure}
+\frametitle{Structure}
 \begin{itemize}
 \item Mancala rules
 \item Q-learning
 \item Backpropagation
 \item Network
 \item Training
-\item Troubleshootin
+\item Troubleshooting
 \item Results
 \end{itemize}
 \end{frame}
@@ -55,9 +56,10 @@
 \begin{frame}
  \frametitle{MDP}
  \begin{itemize}
- \item Mancala can be represented as a Marcov Decision Process (MDP)
+ \item Mancala can be represented as a Marcov Decision Process (MDP) 
  \item set of states S, set of actions per state A, action a $\in$ A
- \item How does the Mancala agent learn to choose the best action?
+\item finite but very large number of states
+ \item How does the Mancala agent learns to choose the best action?
  \end{itemize}
  \end{frame}
 
@@ -134,7 +136,7 @@
 \item $[1,1,5,1,1,1|1,1,5,1,1,1|0,0]$
 \item second player has advantage to play at least tied
 \item network ist startplayer
-\item after some trainingiterations the second player always loosese
+\item after some trainingiterations the second player does not win at all
 \item $\rightarrow$ network is ok
 \end{itemize}
  \end{frame}
@@ -170,7 +172,7 @@
 \item  $[4,4,4,4,4,4|4,4,4,4,4,4|0,0]$
 \item transfer findings to this game (flexible exploration rate, ...)
 \item learns something but oscillates 
-\item  learns better if start in right direction
+\item  learns better if starts in the right direction
 \end{itemize}
  \end{frame}
 
@@ -182,11 +184,11 @@
 \begin{frame}
 \frametitle{improved Mancala with $4$ beans per hole}
 \begin{itemize}
-\item Idea: reduze learining rate if net performs good otherwise increase learning rate
+\item Idea: reduce learining rate if net performs good otherwise increase learning rate
 \item reward only winning not catching beans
 \end{itemize}
 %\begin{lstlisting}
-%if Spieler1gewonnen >80:
+i%f Spieler1gewonnen >80:
  %       l=0.01
   %      ma.a = ma.a/10
    %     ma.exploration_rate = 0
