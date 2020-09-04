@@ -69,7 +69,7 @@
  \begin{itemize}
  \item \textbf{Idea:} reward or punish some action
  \item \textbf{Goal of agent:} maximize total reward
- \item \textbf{here:} Small reward for catching beans, bigger reward for winning the game
+ \item \textbf{possible rewards for Mancala:} Small reward for catching beans, bigger reward for winning the game, punish illegal actions and loosing
  \item use Q-Learning
  \end{itemize}
  \end{frame}
@@ -168,8 +168,9 @@
  \frametitle{simple game}
 \begin{itemize}
 \item $[1,1,5,1,1,1|1,1,5,1,1,1|0,0]$
-\item second player has advantage to play at least tied
+\item play against random
 \item network ist startplayer
+\item obvious way of playing at least tied
 \item after some trainingiterations the second player does not win at all
 \item $\rightarrow$ network is ok
 \end{itemize}
@@ -179,6 +180,7 @@
  \frametitle{simple board}
  \begin{itemize}
 \item reduce the board size: $[2,2|2,2|0,0]$
+\item obvious way of loosing the game: choose first hole
 \item compare guessed Q-Values with choice of hole
 \item Q-function decides for wrong side $\rightarrow$ solve this error
 \item net performs good, if it starts in the right direction
@@ -231,6 +233,9 @@
  \begin{frame}
 \frametitle{improved Mancala with $4$ beans per hole}
  \includegraphics[scale=0.7]{4holestrainingconvergence}
+\begin{itemize}
+\item keep in mind: Mancala ist still more complex and will possible take more time to converge
+\end{itemize}
  \end{frame}
 
 \begin{frame} 

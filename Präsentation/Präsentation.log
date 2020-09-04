@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.8.31)  4 SEP 2020 09:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.8.31)  4 SEP 2020 10:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -945,7 +945,7 @@ Package pdftex.def Info: gewinnrate.jpg  used on input line 157.
 <kleinesNetz10.png, id=437, 379.4175pt x 252.945pt>
 File: kleinesNetz10.png Graphic file (type png)
 <use kleinesNetz10.png>
-Package pdftex.def Info: kleinesNetz10.png  used on input line 196.
+Package pdftex.def Info: kleinesNetz10.png  used on input line 198.
 (pdftex.def)             Requested size: 189.70828pt x 126.47218pt.
  [17
 
@@ -953,7 +953,7 @@ Package pdftex.def Info: kleinesNetz10.png  used on input line 196.
 <kleinesNetz202.png, id=466, 379.4175pt x 252.945pt>
 File: kleinesNetz202.png Graphic file (type png)
 <use kleinesNetz202.png>
-Package pdftex.def Info: kleinesNetz202.png  used on input line 201.
+Package pdftex.def Info: kleinesNetz202.png  used on input line 203.
 (pdftex.def)             Requested size: 265.59042pt x 177.06029pt.
  [18
 
@@ -964,7 +964,7 @@ Package pdftex.def Info: kleinesNetz202.png  used on input line 201.
 <4holeos.png, id=519, 373.395pt x 252.945pt>
 File: 4holeos.png Graphic file (type png)
 <use 4holeos.png>
-Package pdftex.def Info: 4holeos.png  used on input line 216.
+Package pdftex.def Info: 4holeos.png  used on input line 218.
 (pdftex.def)             Requested size: 261.37471pt x 177.06029pt.
  [20
 
@@ -989,7 +989,7 @@ LaTeX Font Warning: Font shape `OML/cmss/m/n' undefined
 <4holestrainingconvergence.png, id=597, 373.395pt x 252.945pt>
 File: 4holestrainingconvergence.png Graphic file (type png)
 <use 4holestrainingconvergence.png>
-Package pdftex.def Info: 4holestrainingconvergence.png  used on input line 234.
+Package pdftex.def Info: 4holestrainingconvergence.png  used on input line 239.
 
 (pdftex.def)             Requested size: 261.37471pt x 177.06029pt.
  [23
@@ -1010,12 +1010,12 @@ Package pdftex.def Info: 4holestrainingconvergence.png  used on input line 234.
 \tf@snm=\write8
 \openout8 = `Präsentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 266.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 266.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 271.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 271.
 
 (./Präsentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 266.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 266.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 271.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 271.
 Package rerunfilecheck Info: File `Präsentation.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
@@ -1044,7 +1044,7 @@ ve/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2020/te
 xmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2020/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2020/texmf-dist/fonts/type1
 /public/amsfonts/symbols/msam10.pfb>
-Output written on Präsentation.pdf (26 pages, 668325 bytes).
+Output written on Präsentation.pdf (26 pages, 668971 bytes).
 PDF statistics:
  757 PDF objects out of 1000 (max. 8388607)
  692 compressed objects within 7 object streams
