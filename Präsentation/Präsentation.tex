@@ -3,7 +3,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
 \usepackage{algorithm,algorithmic}
+\usepackage{beamerthemesplit}
 
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{headline}{}
 
 
 %Information to be included in the title page:
@@ -91,11 +94,11 @@
  \frametitle{Netz}
 \begin{itemize}
 \item \textbf{activation function:} Sigmoidfunction
-\item learningrate for the update-weights-function
+\item \textbf{loss function:} Meanvalue
 \end{itemize}
  \end{frame}
 
- \begin{frame}
+  \begin{frame}
  \frametitle{play}
  \begin{itemize}
 \item choose action by feeding the current board to the net and take the argmax of the output
@@ -126,7 +129,6 @@
 \item update for each board state and action the underlying Q-function
 \item save each board state and dedicated Q-values as training data
 \item feedforward a boardstate to the net
-\item loss $=$ output $-$ Q-values
 \end{itemize}
  \end{frame}
  
@@ -242,7 +244,7 @@
 \frametitle{Adapting learning of Mancala}
 \begin{itemize}
 \item generating a random network of size $[14,10,6]$
-Picture
+\includegraphics[scale=0.5]{mancala_konvergenz}
 \end{itemize}
 \end{frame}
 \begin{frame}
@@ -266,6 +268,13 @@ Picture
 \item runs parallel agents
 \item 3 networks work in concert: input, action and critic
 \end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Quellen}
+\begin{itemize}
+\item neuralnetworksanddeeplearning.com/chap2.html
+\item towardsdatascience.com/the-ancient-game-and-the-ai-d7704bea280d
 \end{itemize}
 \end{frame}
 \end{document}
